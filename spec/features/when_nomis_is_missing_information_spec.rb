@@ -30,7 +30,7 @@ context 'when NOMIS is missing information' do
     end
 
     describe 'the caseload page' do
-      context 'with an NPS offender with a determinate sentence, but no release dates' do
+      context 'with an NPS offender with a determinate sentence, but no required release dates' do
         before do
           stub_offenders = [{
             offenderNo: offender_no,
@@ -42,7 +42,7 @@ context 'when NOMIS is missing information' do
           stub_bookings = [{
             bookingId: 1,
             sentenceDetail: {
-              releaseDate: 30.years.from_now.iso8601,
+            releaseDate: 30.years.from_now.iso8601,
               sentenceStartDate: Time.zone.now.iso8601
             }
           }]
@@ -56,7 +56,7 @@ context 'when NOMIS is missing information' do
         it 'does not error' do
           visit prison_caseload_index_path(prison_code)
 
-          expect(page).to have_content('Showing 1 - 1 of 1 results')
+          expect(page).to have_content('Your caseload (0)')
         end
       end
     end

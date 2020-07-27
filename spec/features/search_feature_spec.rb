@@ -56,7 +56,7 @@ feature 'Search for offenders' do
     click_on('search-button')
 
     expect(page).to have_current_path(prison_search_path('LEI'), ignore_query: true)
-    expect(page).to have_css('tbody tr', count: 6)
+    expect(page).to have_css('tbody tr', count: 5)
   end
 
   it 'Can search from the Allocations summary page', vcr: { cassette_name: :allocated_search_feature } do

@@ -108,23 +108,103 @@ describe Nomis::OffenderSummary do
   end
 
   describe '#sentenced?' do
-    context 'with sentence detail with a release date' do
-      before do
-        subject.sentence = Nomis::SentenceDetail.new(
-          sentence_start_date: Date.new(2005, 2, 3),
-          release_date: Time.zone.today)
+    describe 'a determinate sentence' do
+      before {
+        subject.inprisonment_status = 'SENT03'
+      }
+
+      context 'with the required dates' do
+        before  do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            automatic_release_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as sentenced' do
+          expect(subject.sentenced?).to be true
+        end
       end
 
-      it 'marks the offender as sentenced' do
-        expect(subject.sentenced?).to be true
+      context 'without the required dates' do
+        before  do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            tariff_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as not sentenced' do
+          expect(subject.sentenced?).to be false
+        end
       end
     end
 
-    context 'with blank sentence detail' do
-      before { subject.sentence = Nomis::SentenceDetail.new }
+    describe 'a indeterminate sentence' do
+      before {
+        subject.inprisonment_status = 'SEC93'
+      }
 
-      it 'marks the offender as not sentenced' do
-        expect(subject.sentenced?).to be false
+      context 'with the required dates' do
+        before  do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            tariff_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as sentenced' do
+          expect(subject.sentenced?).to be true
+        end
+      end
+
+      context 'without the required dates' do
+        before  do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            home_detention_curfew_eligibility_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as not sentenced' do
+          expect(subject.sentenced?).to be false
+        end
+      end
+    end
+
+    describe 'a recalled sentence' do
+      before do
+        subject.inprisonment_status = 'FTR_ORA'
+      end
+
+      context 'with the required dates' do
+        before do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            nomis_post_recall_release_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as sentenced' do
+          expect(subject.sentenced?).to be true
+        end
+      end
+
+      context 'without the required dates' do
+        before do
+          subject.sentence = Nomis::SentenceDetail.new(
+            sentence_start_date: Date.new(2005, 2, 3),
+            tariff_date: Time.zone.tomorrow)
+        end
+
+        it 'marks the offender as not sentenced' do
+          expect(subject.sentenced?).to be false
+        end
+      end
+    end
+
+    describe 'no sentence information' do
+      context 'with blank sentence detail' do
+        before { subject.sentence = Nomis::SentenceDetail.new }
+
+        it 'marks the offender as not sentenced' do
+          expect(subject.sentenced?).to be false
+        end
       end
     end
   end

@@ -2,7 +2,7 @@ module Nomis
   class OffenderBase
     delegate :home_detention_curfew_eligibility_date,
              :home_detention_curfew_actual_date,
-             :conditional_release_date, :release_date,
+             :conditional_release_date,
              :parole_eligibility_date, :tariff_date,
              :automatic_release_date, :licence_expiry_date,
              :post_recall_release_date, :earliest_release_date,
@@ -24,21 +24,9 @@ module Nomis
     end
 
     def sentenced?
-      # A prisoner will have had a sentence calculation and for our purposes
-      # this means that they will either have a:
-      # 1) Release date, or
-      # 2) Parole eligibility date, or
-      # 3) HDC release date (homeDetentionCurfewEligibilityDate field).
-      # If they do not have any of these we should be checking for a tariff date
-      # Once we have all the dates we then need to display whichever is the
-      # earliest one.
       return false if sentence&.sentence_start_date.blank?
 
-      sentence.release_date.present? ||
-        sentence.parole_eligibility_date.present? ||
-        sentence.home_detention_curfew_eligibility_date.present? ||
-        sentence.tariff_date.present? ||
-        @sentence_type.indeterminate_sentence?
+      has_determinate_dates? || has_indeterminate_dates? || has_recall_dates?
     end
 
     def early_allocation?
@@ -167,6 +155,27 @@ module Nomis
                     else
                       HandoverDateService::NO_HANDOVER_DATE
                     end
+    end
+
+    def has_determinate_dates?
+      !indeterminate_sentence? &&
+        (sentence.conditional_release_date.present? ||
+        sentence.automatic_release_date.present? ||
+        sentence.home_detention_curfew_actual_date.present? ||
+        sentence.home_detention_curfew_eligibility_date.present? ||
+        sentence.parole_eligibility_date.present?)
+    end
+
+    def has_indeterminate_dates?
+      indeterminate_sentence? &&
+        sentence.tariff_date.present? ||
+        sentence.parole_eligibility_date.present?
+    end
+
+    def has_recall_dates?
+      recalled? &&
+        sentence.post_recall_release_date.present? ||
+        sentence.licence_expiry_date.present?
     end
   end
 end

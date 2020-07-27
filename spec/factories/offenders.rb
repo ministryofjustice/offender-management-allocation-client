@@ -40,7 +40,8 @@ FactoryBot.define do
     sequence(:sentenceDetail) { |seq|
       {
         'tariffDate' => Date.new(2032 + seq % 5, 3, 17) - (seq * 2).days,
-        'sentenceStartDate' => Date.new(2009, 2, 8)
+        'sentenceStartDate' => Date.new(2009, 2, 8),
+        'conditionalReleaseDate' => Date.new(2032 + seq % 5, 3, 17) - (seq * 2).days
       }
     }
   end

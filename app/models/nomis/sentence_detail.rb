@@ -7,7 +7,6 @@ module Nomis
     attr_reader :home_detention_curfew_eligibility_date,
                 :home_detention_curfew_actual_date,
                 :parole_eligibility_date,
-                :release_date,
                 :licence_expiry_date,
                 :sentence_start_date,
                 :tariff_date,
@@ -77,7 +76,6 @@ module Nomis
 
     def load_from_json(payload)
       @parole_eligibility_date = deserialise_date(payload, 'paroleEligibilityDate')
-      @release_date = deserialise_date(payload, 'releaseDate')
       @sentence_start_date = deserialise_date(payload, 'sentenceStartDate')
       @tariff_date = deserialise_date(payload, 'tariffDate')
       @automatic_release_date = deserialise_date(payload, 'automaticReleaseDate')
