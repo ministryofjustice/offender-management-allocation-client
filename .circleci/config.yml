@@ -368,6 +368,7 @@ workflows:
               only:
                 - main
                 - preproduction
+                - mo215-upgrade-sentry
       - deploy_staging:
           requires:
             - build_and_push_docker_image
@@ -375,6 +376,7 @@ workflows:
             branches:
               only:
                 - main
+                - mo215-upgrade-sentry
       - test_staging:
           requires:
             - build_and_push_docker_image
