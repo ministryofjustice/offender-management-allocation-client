@@ -16,7 +16,7 @@ module HmppsApi
                                fromDateTime: (date - 1.year).strftime('%FT%R')
                              })
         data.map { |movement|
-          api_deserialiser.deserialise(HmppsApi::Movement, movement)
+          HmppsApi::Movement.from_json(movement)
         }
       end
 
@@ -27,7 +27,7 @@ module HmppsApi
                            queryparams: { latestOnly: false, movementTypes: %w[ADM TRN REL] },
                            cache: true)
         data.sort_by { |k| k['movementDate'] }.map { |movement|
-          api_deserialiser.deserialise(HmppsApi::Movement, movement)
+          HmppsApi::Movement.from_json(movement)
         }
       end
 
@@ -44,7 +44,7 @@ module HmppsApi
 
         movements = data.map { |d|
           d.sort_by { |k| k['movementDate'] }.map { |movement|
-            api_deserialiser.deserialise(HmppsApi::Movement, movement)
+            HmppsApi::Movement.from_json(movement)
           }
         }
         # return a hash of offender_no => [HmppsApi::Movement]
@@ -67,7 +67,7 @@ module HmppsApi
         # (one array rather than an array of arrays)
         movements = data.map { |d|
           movement = d.max_by { |k| k['movementDate'] }
-          api_deserialiser.deserialise(HmppsApi::Movement, movement)
+          HmppsApi::Movement.from_json(movement)
         }
         # filter out non-temp movements - so if the last movement was
         # not temp, the resulting array will not have an entry for that offender

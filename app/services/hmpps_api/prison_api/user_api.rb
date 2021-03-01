@@ -9,10 +9,10 @@ module HmppsApi
         route = "/users/#{username}"
         response = client.get(route)
 
-        user = api_deserialiser.deserialise(HmppsApi::UserDetails, response)
-        user.email_address =
-          HmppsApi::PrisonApi::PrisonOffenderManagerApi.fetch_email_addresses(user.staff_id)
-        user
+        HmppsApi::UserDetails.from_json(response).tap do |user|
+          user.email_address =
+            HmppsApi::PrisonApi::PrisonOffenderManagerApi.fetch_email_addresses(user.staff_id)
+        end
       end
 
       def self.user_caseloads(staff_id)

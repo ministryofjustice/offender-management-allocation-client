@@ -56,7 +56,7 @@ RSpec.describe Prison, type: :model do
         stub_request(:get, "#{ApiHelper::T3}/locations/description/LEI/inmates?convictedStatus=Convicted&returnCategory=true").
           with(
             headers: {
-              'Page-Limit' => '200',
+              'Page-Limit' => Prison::OffenderEnumerator::FETCH_SIZE.to_s,
               'Page-Offset' => '0',
             }).
           to_return(body: offenders.to_json)
@@ -91,8 +91,8 @@ RSpec.describe Prison, type: :model do
       end
     end
 
-    context 'when there are exactly 200 offenders' do
-      let(:offenders) { build_list(:nomis_offender, 200) }
+    context 'when there are exactly FETCH_SIZE offenders' do
+      let(:offenders) { build_list(:nomis_offender, Prison::OffenderEnumerator::FETCH_SIZE) }
       let(:offender_nos) { offenders.map { |o| o.fetch(:offenderNo) } }
 
       before do
@@ -100,7 +100,7 @@ RSpec.describe Prison, type: :model do
         stub_request(:get, "#{ApiHelper::T3}/locations/description/LEI/inmates?convictedStatus=Convicted&returnCategory=true").
           with(
             headers: {
-              'Page-Limit' => '200',
+              'Page-Limit' => Prison::OffenderEnumerator::FETCH_SIZE.to_s,
               'Page-Offset' => '0',
             }).
           to_return(body: offenders.to_json)
@@ -131,7 +131,7 @@ RSpec.describe Prison, type: :model do
       end
 
       it 'fetches one page only' do
-        expect(subject.count).to eq(200)
+        expect(subject.count).to eq(Prison::OffenderEnumerator::FETCH_SIZE)
       end
     end
   end

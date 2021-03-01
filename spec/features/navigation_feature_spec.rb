@@ -86,7 +86,7 @@ feature 'Navigation' do
         let(:index) { 2 }
 
         it 'highlights the section' do
-          click_menu_and_wait(link_css, index, delay: 2)
+          click_menu_and_wait(link_css, index, delay: 4)
           expect(page).to have_content offender_name
           click_link_and_wait offender_name
           new_link = all(link_css)[index]
@@ -103,7 +103,7 @@ feature 'Navigation' do
 
         it 'highlights the section' do
           click_menu_and_wait(link_css, index, delay: 4)
-          click_link_and_wait 'Allocate', delay: 3
+          click_link_and_wait 'Allocate', delay: 5
           new_link = all(link_css)[index]
           expect(new_link['aria-current']).to eq('page')
         end

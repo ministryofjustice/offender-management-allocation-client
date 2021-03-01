@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SummaryController, :allocation, type: :controller do
+RSpec.describe SummaryController, type: :controller do
   let(:prison) { build(:prison).code }
 
   before { stub_sso_data(prison) }
@@ -350,7 +350,7 @@ RSpec.describe SummaryController, :allocation, type: :controller do
           attributes_for(:movement,
                          offenderNo: 'A1111AA',
                          toAgency: prison,
-                         movementDate: '14-01-2020')
+                         movementDate: '2020-01-14')
         ]
       end
 

@@ -18,13 +18,7 @@ module HmppsApi
         route = '/auth/oauth/token?grant_type=client_credentials'
         response = @oauth_client.post(route)
 
-        api_deserialiser.deserialise(HmppsApi::Oauth::Token, response)
-      end
-
-    private
-
-      def api_deserialiser
-        @api_deserialiser ||= ApiDeserialiser.new
+        HmppsApi::Oauth::Token.from_json(response)
       end
     end
   end

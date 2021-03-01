@@ -107,7 +107,7 @@ module ApiHelper
     # Return the actual offenders from the call to /locations/description/PRISON/inmates
     stub_request(:get, elite2listapi).with(
       headers: {
-        'Page-Limit' => '200',
+        'Page-Limit' => Prison::OffenderEnumerator::FETCH_SIZE.to_s,
         'Page-Offset' => '0'
       }).to_return(body: offenders.zip(booking_ids).map { |o, booking_id| o.except(:sentence, :recall).merge('bookingId' => booking_id, 'agencyId' => prison) }.to_json)
 

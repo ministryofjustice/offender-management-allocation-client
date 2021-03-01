@@ -16,10 +16,6 @@ module HmppsApi
         host = Rails.configuration.prisoner_search_host
         HmppsApi::Client.new(host + '/prisoner-search')
       end
-
-      def api_deserialiser
-        ApiDeserialiser.new
-      end
     end
   end
 end

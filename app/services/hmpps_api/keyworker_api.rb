@@ -5,7 +5,7 @@ module HmppsApi
     def self.get_keyworker(location, offender_no)
       route = "/key-worker/#{location}/offender/#{offender_no}"
       response = client.get(route)
-      ApiDeserialiser.new.deserialise(HmppsApi::KeyworkerDetails, response)
+      HmppsApi::KeyworkerDetails.from_json(response)
     rescue Faraday::ResourceNotFound # 404 Not Found error
       HmppsApi::NullKeyworker.new
     end
