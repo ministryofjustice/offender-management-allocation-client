@@ -84,7 +84,6 @@ class AllocationsController < PrisonsApplicationController
   # Note #update is delegated to #create
   def create
     offender = offender(allocation_params[:nomis_offender_id])
-    @override = override
     allocation = allocation_attributes(offender)
 
     if AllocationService.create_or_update(allocation)
@@ -134,9 +133,6 @@ private
       allocated_at_tier: offender.tier,
       recommended_pom_type: (RecommendationService.recommended_pom_type(offender) == RecommendationService::PRISON_POM) ? 'prison' : 'probation',
       prison: active_prison_id,
-      override_reasons: override_reasons,
-      suitability_detail: suitability_detail,
-      override_detail: override_detail,
       message: allocation_params[:message]
     }
   end
@@ -150,12 +146,6 @@ private
       active_prison_id,
       allocation_params[:nomis_staff_id]
     )
-  end
-
-  def override
-    Override.where(
-      nomis_offender_id: allocation_params[:nomis_offender_id]).
-      where(nomis_staff_id: allocation_params[:nomis_staff_id]).last
   end
 
   def current_pom_for(nomis_offender_id)
@@ -205,17 +195,5 @@ private
       :event,
       :event_trigger
     )
-  end
-
-  def override_reasons
-    @override[:override_reasons] if @override.present?
-  end
-
-  def override_detail
-    @override[:more_detail] if @override.present?
-  end
-
-  def suitability_detail
-    @override[:suitability_detail] if @override.present?
   end
 end

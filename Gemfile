@@ -47,6 +47,7 @@ gem 'sassc-rails'
 # whilst also allowing invalid emails through.
 # https://stackoverflow.com/questions/38611405/email-validation-in-ruby-on-rails
 gem 'valid_email2'
+gem 'wicked'
 
 gem 'activeadmin'
 

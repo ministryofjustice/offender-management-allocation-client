@@ -46,7 +46,7 @@ feature 'Allocation' do
 
   scenario 'overriding an allocation', vcr: { cassette_name: :override_allocation_feature_ok } do
     # This is Amit's staff_id - he is top of the Prison POM list
-    override_nomis_staff_id = 485_787
+    #override_nomis_staff_id = 485_787
 
     visit new_prison_allocation_path('LEI', nomis_offender_id)
 
@@ -58,19 +58,16 @@ feature 'Allocation' do
 
     expect(page).to have_css('h1', text: 'Why are you allocating a prison officer POM?')
 
-    check('override-2')
-    check('override-3')
+    find('label[for=override-2]').click
+    find('label[for=override-3]').click
+
     click_button('Continue')
 
-    expect(Override.count).to eq(1)
-
-    expect(current_url).to have_content(prison_confirm_allocation_path('LEI', nomis_offender_id, override_nomis_staff_id))
     click_button 'Complete allocation'
 
     expect(current_url).to have_content(unallocated_prison_prisoners_path('LEI'))
 
     expect(page).to have_css('.notification', text: "#{offender_name} has been allocated to Amit Muthu (Prison POM)")
-    expect(Override.count).to eq(0)
   end
 
   scenario 'overriding an allocation can validate missing reasons', vcr: { cassette_name: :override_allocation_feature_validate_reasons } do
@@ -86,7 +83,6 @@ feature 'Allocation' do
 
     click_button('Continue')
     expect(page).to have_content('Select one or more reasons for not accepting the recommendation')
-    expect(Override.count).to eq(0)
   end
 
   scenario 'overriding an allocation can validate missing Other detail', vcr: { cassette_name: :override_allocation_feature_validate_other } do
@@ -103,7 +99,6 @@ feature 'Allocation' do
     check('override-conditional-4')
     click_button('Continue')
     expect(page).to have_content('Please provide extra detail when Other is selected')
-    expect(Override.count).to eq(0)
   end
 
   scenario 'overriding an allocation can validate missing suitability detail', vcr: { cassette_name: :override_suitability_allocation_feature } do
@@ -120,7 +115,6 @@ feature 'Allocation' do
     check('override-conditional-1')
     click_button('Continue')
     expect(page).to have_content('Enter reason for allocating this POM')
-    expect(Override.count).to eq(0)
   end
 
   scenario 'overriding an allocation can validate the reason text area character limit', vcr: { cassette_name: :override_allocation__character_count_feature } do

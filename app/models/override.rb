@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
-class Override < ApplicationRecord
+class Override
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+  include ActiveModel::AttributeAssignment
+
+  attribute :nomis_staff_id, :integer
+  attribute :nomis_offender_id, :string
+
+  attribute :more_detail, :string
+  attribute :suitability_detail, :string
+  attr_accessor :override_reasons
+
+  attr_writer :session
+
   validates :nomis_staff_id, presence: {
     message: 'NOMIS Staff ID is required'
   }

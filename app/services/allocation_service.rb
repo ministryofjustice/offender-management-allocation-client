@@ -68,8 +68,6 @@ class AllocationService
                           message: params[:message],
                           pom_nomis_id: params[:primary_pom_nomis_id]).send_email
 
-    delete_overrides(params[:primary_pom_nomis_id], params[:nomis_offender_id])
-
     alloc_version
   end
 
@@ -115,14 +113,5 @@ class AllocationService
     nomis_staff_id = current_allocation[nomis_offender_id].primary_pom_nomis_id
 
     PrisonOffenderManagerService.get_pom_at(prison_id, nomis_staff_id)
-  end
-
-private
-
-  def self.delete_overrides(nomis_staff_id, nomis_offender_id)
-    Override.where(
-      nomis_staff_id: nomis_staff_id,
-      nomis_offender_id: nomis_offender_id).
-    destroy_all
   end
 end
