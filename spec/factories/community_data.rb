@@ -9,6 +9,16 @@ FactoryBot.define do
     otherIds { { crn: 'X362207'} }
 
     offenderManagers { [ build(:community_offender_manager) ] }
+
+    enhancedResourcing { true }
+
+    trait :crc do
+      enhancedResourcing { false }
+    end
+
+    trait :nps do
+      enhancedResourcing { true }
+    end
   end
 
   factory :community_offender_manager, class: Hash do

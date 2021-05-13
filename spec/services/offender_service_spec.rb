@@ -52,20 +52,20 @@ describe OffenderService, type: :feature do
 
   describe '#get_community_data' do
     # This offender has been set up in nDelius test especially for this test
-    let(:nomis_offender_id) { 'G0239GU' }
+    let(:nomis_offender_id) { 'A5194DY' }
 
     # This test can only be run inside the VPN as nDelius test isn't globally accessible
     context 'when hitting API', :vpn_only, vcr: { cassette_name: 'delius/get_community_data' } do
       it 'gets some data' do
         expect(described_class.get_community_data(nomis_offender_id)).
-            to eq(crn: "X362207",
+            to eq(crn: "X349420",
                   ldu_code: "N07NPSA",
-                  mappa_levels: [2],
+                  mappa_levels: [],
                   noms_no: nomis_offender_id,
-                  offender_manager: nil,
+                  offender_manager: "Cheema, Gurnank",
                   service_provider: "NPS",
-                  team_name: "Unallocated Team(N07)",
-                  tier: "A-2")
+                  team_name: "OMU A",
+                  tier: "B2")
       end
     end
 
@@ -79,10 +79,19 @@ describe OffenderService, type: :feature do
           context 'when NPS' do
             before do
               stub_community_offender(nomis_offender_id,
-                                      build(:community_data,
-                                            offenderManagers: [
-                                                build(:community_offender_manager, probationArea: { nps: true })
-                                            ]))
+                                      build(:community_data, :nps))
+            end
+
+            it 'gets NPS' do
+              expect(described_class.get_community_data(nomis_offender_id).fetch(:service_provider)).to eq('NPS')
+            end
+          end
+
+          context 'when not found' do
+            before do
+              stub_community_offender(nomis_offender_id,
+                                      build(:community_data, :nps))
+              stub_resourcing_404 nomis_offender_id
             end
 
             it 'gets NPS' do
@@ -93,10 +102,7 @@ describe OffenderService, type: :feature do
           context 'when CRC' do
             before do
               stub_community_offender(nomis_offender_id,
-                                      build(:community_data,
-                                            offenderManagers: [
-                                                build(:community_offender_manager, probationArea: { nps: false })
-                                            ]))
+                                      build(:community_data, :crc))
             end
 
             it 'gets CRC' do
