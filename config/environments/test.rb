@@ -69,5 +69,6 @@ Rails.application.configure do
   # To avoid leaking global state between tests, we clear this cache after every spec in rails_helper.rb
   config.cache_store = :memory_store, { size: 64.megabytes }
 
-  config.community_api_host = 'https://community-api-secure.test.delius.probation.hmpps.dsd.io'
+  # Has to be hard-coded here rather than an ENV as the VCR cassettes have this hostname in them.
+  config.community_api_host = 'https://community-api.test.probation.service.justice.gov.uk'
 end

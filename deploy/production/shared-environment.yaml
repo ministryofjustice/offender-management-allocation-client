@@ -10,7 +10,7 @@ data:
   SENTRY_CURRENT_ENV: "production"
   PRISON_API_HOST: "https://api.prison.service.justice.gov.uk"
   PRISONER_SEARCH_HOST: "https://prisoner-offender-search.prison.service.justice.gov.uk"
-  COMMUNITY_API_HOST: "https://community-api-secure.probation.service.justice.gov.uk"
+  COMMUNITY_API_HOST: "https://community-api.probation.service.justice.gov.uk"
   COMPLEXITY_API_HOST: "https://complexity-of-need.hmpps.service.justice.gov.uk"
   NOMIS_OAUTH_HOST: "https://sign-in.hmpps.service.justice.gov.uk"
   NOMIS_OAUTH_PUBLIC_KEY: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFwSkdtYWp6SW9POVdSY2owM2VTbQpFeWJTYnNJaEdkNkRWVDRxUWFSRTZwN3RIN1ppSklvRWtzczRkOFphMGhuYWJwa0JqWTYwS3NnMW5teXpoZVlSCithWXVtc0gxbm1JcmJ4ZCtqV043T3A2V1pteWRBU3JMek1XWVdBYlNHOHBXMXkxY1RwdkRaMTlBSGJTYTRRL2UKSnRlcDFscCsyMnVHMW5kTVRwclRkNjRLTkcyZnRwcmV3aFExeE5xdmtUWjZoQnVRRVJKMzFhUXBkRThNQTFxSwpDWnI3VDJxTk1BTWNkTlpia0FqRjVLOXE0alZ0QkY3WXFPeXJ0T1JmTldqYUJoWHA5TlN0YWJCTXBURTdQNm8vClhJaU9rcmltNjlzaG1OdDhVRlU3WUlJN0ZvejgzM29HZnk2dmtDRjRxcGpIZ0RNc21STjc1UXRrRmRtaU8xaDgKcHdJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg"

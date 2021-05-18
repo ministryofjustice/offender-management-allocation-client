@@ -22,7 +22,6 @@ references:
           VCR: 1
           PARALLEL_TEST_PROCESSORS: 6
           COMPLEXITY_API_HOST: https://complexity-of-need-staging.hmpps.service.justice.gov.uk
-          COMMUNITY_API_HOST: https://community-api-secure.test.delius.probation.hmpps.dsd.io
       - image: circleci/postgres:10.5-alpine
         environment:
           POSTGRES_USER: ubuntu

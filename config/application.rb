@@ -48,7 +48,6 @@ module OffenderManagementAllocationClient
     config.sentry_dsn = ENV['SENTRY_DSN']&.strip
 
     config.keyworker_api_host = ENV['KEYWORKER_API_HOST']&.strip
-
     config.digital_prison_service_host = ENV['DIGITAL_PRISON_SERVICE_HOST']&.strip
     config.nomis_oauth_host = ENV['NOMIS_OAUTH_HOST']&.strip
     config.prison_api_host = ENV['PRISON_API_HOST']&.strip

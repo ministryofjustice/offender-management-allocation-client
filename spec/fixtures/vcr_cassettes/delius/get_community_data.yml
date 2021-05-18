@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/G0239GU/all
+    uri: https://community-api.test.probation.service.justice.gov.uk/secure/offenders/nomsNumber/G0239GU/all
     body:
       encoding: US-ASCII
       string: ''
@@ -56,7 +56,7 @@ http_interactions:
   recorded_at: Thu, 18 Mar 2021 08:52:29 GMT
 - request:
     method: get
-    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/G0239GU/registrations
+    uri: https://community-api.test.probation.service.justice.gov.uk/secure/offenders/nomsNumber/G0239GU/registrations
     body:
       encoding: US-ASCII
       string: ''
