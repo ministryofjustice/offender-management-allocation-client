@@ -115,7 +115,7 @@ class AllocationsController < PrisonsApplicationController
                          end
     complexity_history = [] if complexity_history.nil?
 
-    @history = (allocation_history(allocation) + vlo_history + complexity_history).sort_by(&:created_at)
+    @history = (allocation_history(allocation) + new_allocation_history + vlo_history + complexity_history).sort_by(&:created_at)
     @early_allocations = CaseInformation.find_by!(nomis_offender_id: nomis_offender_id_from_url).early_allocations
     @email_histories = EmailHistory.in_offender_timeline.where(nomis_offender_id: nomis_offender_id_from_url)
 
@@ -123,6 +123,12 @@ class AllocationsController < PrisonsApplicationController
   end
 
 private
+
+  def new_allocation_history
+    OffenderEvent.where(nomis_offender_id: nomis_offender_id_from_url)
+                 .where(event: [:allocate_primary_pom, :allocate_coworking_pom, :reallocate_primary_pom, :reallocate_coworking_pom])
+                 .map { |event| NewCaseHistory.new(event) }
+  end
 
   # Gets the versions in *forward* order - so often we want to reverse
   # this list as we're interested in recent rather than ancient history

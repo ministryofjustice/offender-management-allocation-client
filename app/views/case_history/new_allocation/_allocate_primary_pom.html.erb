@@ -1,0 +1,21 @@
+<% description = capture do %>
+  <span class="moj-badge">SPIKE</span>
+  Prisoner allocated to <%= allocate_primary_pom.pom_name.titleize %>
+  - <%= format_email(@pom_emails[allocate_primary_pom.pom_staff_id]) %>
+  <br/>
+  Tier: <%= allocate_primary_pom.allocated_at_tier %>
+  <% if allocate_primary_pom.override_reasons.present? %>
+    <p class="govuk-body govuk-!-margin-bottom-1"><%= display_override_pom(allocate_primary_pom) %></p>
+    <p class="govuk-body govuk-!-margin-bottom-1">Reason(s):</p>
+    <div id="override-reason-allocation">
+      <% allocate_primary_pom.override_reasons.each do | reason| %>
+        <%= display_override_details(reason, allocate_primary_pom) %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<%= render 'case_history/case_history',
+           title: 'Prisoner allocated',
+           description: description,
+           object: allocate_primary_pom
+%>

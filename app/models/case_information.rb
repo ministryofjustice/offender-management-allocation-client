@@ -8,6 +8,9 @@ class CaseInformation < ApplicationRecord
 
   belongs_to :local_delivery_unit, optional: true
 
+  has_many :new_allocations
+  has_many :pom_details, through: :new_allocations
+
   has_many :early_allocations,
            -> { order(created_at: :asc) },
            foreign_key: :nomis_offender_id,

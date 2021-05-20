@@ -36,6 +36,7 @@ class CoworkingController < PrisonsApplicationController
     AllocationService.allocate_secondary(
       nomis_offender_id: allocation_params[:nomis_offender_id],
       secondary_pom_nomis_id: allocation_params[:nomis_staff_id],
+      pom_detail: PomDetail.find_by(prison_code: active_prison_id, nomis_staff_id: allocation_params[:nomis_staff_id]),
       created_by_username: current_user,
       message: allocation_params[:message]
     )
@@ -55,6 +56,11 @@ class CoworkingController < PrisonsApplicationController
   end
 
   def destroy
+    # Deallocate 'new' allocation
+    case_info = CaseInformation.find_by!(nomis_offender_id: nomis_offender_id_from_url)
+    AllocationService.deallocate(case_info: case_info, allocation_type: :coworking)
+
+    # Deallocate 'old' allocation
     @allocation = Allocation.find_by!(
       nomis_offender_id: nomis_offender_id_from_url
     )

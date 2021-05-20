@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_103739) do
+ActiveRecord::Schema.define(version: 2021_05_19_153151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,29 @@ ActiveRecord::Schema.define(version: 2021_05_12_103739) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_local_delivery_units_on_code", unique: true
+  end
+
+  create_table "new_allocations", force: :cascade do |t|
+    t.bigint "case_information_id", null: false
+    t.bigint "pom_detail_id", null: false
+    t.string "allocation_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["case_information_id", "allocation_type"], name: "index_new_allocations_on_case_information_and_type", unique: true
+    t.index ["case_information_id"], name: "index_new_allocations_on_case_information_id"
+    t.index ["pom_detail_id"], name: "index_new_allocations_on_pom_detail_id"
+  end
+
+  create_table "offender_events", force: :cascade do |t|
+    t.string "nomis_offender_id", null: false
+    t.string "event", null: false
+    t.datetime "happened_at", null: false
+    t.string "triggered_by", null: false
+    t.string "triggered_by_nomis_username"
+    t.jsonb "metadata"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["nomis_offender_id"], name: "index_offender_events_on_nomis_offender_id"
   end
 
   create_table "overrides", force: :cascade do |t|

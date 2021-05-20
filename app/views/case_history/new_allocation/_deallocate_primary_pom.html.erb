@@ -1,0 +1,19 @@
+<% if deallocate_primary_pom.event_trigger == 'offender_transferred' %>
+  <%= render 'case_history/case_history',
+             title: 'Prisoner unallocated (transfer)',
+             description: '',
+             object: deallocate_primary_pom
+  %>
+<% else %>
+  <% description = capture do %>
+    <% unless deallocate_primary_pom.event_trigger == 'offender_transferred' %>
+      Prisoner unallocated POM
+      <%= deallocate_primary_pom.previous_primary_pom_name.titleize %> - <%= format_email(@pom_emails[deallocate_primary_pom.previous_primary_pom_id]) %>
+    <% end %>
+  <% end %>
+  <%= render 'case_history/case_history',
+             title: 'Prisoner unallocated',
+             description: description,
+             object: deallocate_primary_pom
+  %>
+<% end %>

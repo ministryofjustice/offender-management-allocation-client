@@ -1,0 +1,10 @@
+<% description = capture do %>
+  <span class="moj-badge">SPIKE</span>
+  Prisoner allocated to <%= allocate_coworking_pom.pom_name.titleize %>
+  - <%= format_email(@pom_emails[allocate_coworking_pom.pom_staff_id]) %>
+<% end %>
+<%= render 'case_history/case_history',
+           title: 'Co-working allocation',
+           description: description,
+           object: allocate_coworking_pom
+%>

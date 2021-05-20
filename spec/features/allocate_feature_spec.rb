@@ -6,6 +6,7 @@ feature 'Allocation' do
   let!(:nomis_offender_id) { 'G7266VD' }
   let(:offender_name) { 'Omistius Annole' }
   let!(:never_allocated_offender) { 'G1670VU' }
+  let(:moic_integration_tests_staff_id) { 485_758 }
 
   let!(:probation_officer_pom_detail) {
     PomDetail.create!(
@@ -39,7 +40,14 @@ feature 'Allocation' do
     expect(page).to have_css('h1', text: 'Confirm allocation')
     expect(page).to have_css('p', text: "You are allocating #{offender_name} to Moic Integration-Tests")
 
+    expect(NewAllocation.count).to be_zero
+
     click_button 'Complete allocation'
+
+    expect(NewAllocation.count).to eq(1)
+    expect(NewAllocation.first).to be_primary
+    expect(NewAllocation.first.case_information.nomis_offender_id).to eq(nomis_offender_id)
+    expect(NewAllocation.first.pom_detail.nomis_staff_id).to eq(moic_integration_tests_staff_id)
 
     expect(current_url).to have_content(unallocated_prison_prisoners_path('LEI'))
     expect(page).to have_css('.notification', text: "#{offender_name} has been allocated to Moic Integration-Tests (Probation POM)")
@@ -66,7 +74,15 @@ feature 'Allocation' do
     expect(Override.count).to eq(1)
 
     expect(current_url).to have_content(prison_confirm_allocation_path('LEI', nomis_offender_id, override_nomis_staff_id))
+
+    expect(NewAllocation.count).to be_zero
+
     click_button 'Complete allocation'
+
+    expect(NewAllocation.count).to eq(1)
+    expect(NewAllocation.first).to be_primary
+    expect(NewAllocation.first.case_information.nomis_offender_id).to eq(nomis_offender_id)
+    expect(NewAllocation.first.pom_detail.nomis_staff_id).to eq(override_nomis_staff_id)
 
     expect(current_url).to have_content(unallocated_prison_prisoners_path('LEI'))
 
@@ -149,6 +165,10 @@ feature 'Allocation' do
       recommended_pom_type: 'probation'
     )
 
+    create(:new_allocation, :primary,
+           case_information: CaseInformation.find_by(nomis_offender_id: nomis_offender_id),
+           pom_detail: create(:pom_detail, nomis_staff_id: 485_735, prison_code: 'LEI'))
+
     visit allocated_prison_prisoners_path('LEI')
 
     within('.allocated_offender_row_0') do
@@ -165,6 +185,9 @@ feature 'Allocation' do
     expect(page).to have_css('.current_pom_full_name', text: 'Jara Duncan, Laura')
     expect(page).to have_css('.current_pom_grade', text: 'Probation POM')
 
+    expect(NewAllocation.count).to eq(1)
+    expect(NewAllocation.first.pom_detail.nomis_staff_id).to eq(485_735)
+
     within('.recommended_pom_row_0') do
       click_link 'Allocate'
     end
@@ -172,6 +195,11 @@ feature 'Allocation' do
     expect(current_url).to have_content(prison_confirm_reallocation_path('LEI', nomis_offender_id, 485_758))
 
     click_button 'Complete allocation'
+
+    expect(NewAllocation.count).to eq(1)
+    expect(NewAllocation.first.pom_detail.nomis_staff_id).to eq(moic_integration_tests_staff_id)
+    expect(NewAllocation.first).to be_primary
+    expect(NewAllocation.first.case_information.nomis_offender_id).to eq(nomis_offender_id)
 
     expect(Allocation.find_by(nomis_offender_id: nomis_offender_id).event).to eq("reallocate_primary_pom")
   end

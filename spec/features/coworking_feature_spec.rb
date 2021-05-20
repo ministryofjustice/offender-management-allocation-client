@@ -53,6 +53,16 @@ feature 'Co-working' do
       )
     }
 
+    # Create an existing 'primary' POM allocation to accompany the new coworking allocation
+    let!(:new_allocation_primary) {
+      # We have to get_pom_at so the PomDetail record gets automagically created
+      primary_pom = PrisonOffenderManagerService.get_pom_at(prison.code, prison_pom[:staff_id])
+      create(:new_allocation, :primary,
+             case_information: CaseInformation.find_by(nomis_offender_id: nomis_offender_id),
+             pom_detail: PomDetail.find_by(prison_code: prison.code, nomis_staff_id: primary_pom.staff_id)
+             )
+    }
+
     scenario 'show allocate a co-working POM page' do
       visit new_prison_coworking_path(prison.code, nomis_offender_id)
 
@@ -109,7 +119,15 @@ feature 'Co-working' do
 
       fill_in 'message', with: 'Some new information'
 
+      expect(NewAllocation.count).to eq(1)
+      expect(NewAllocation.coworking.count).to be_zero
+
       click_button 'Complete allocation'
+
+      expect(NewAllocation.count).to eq(2)
+      expect(NewAllocation.coworking.count).to eq(1)
+      expect(NewAllocation.coworking.first.case_information.nomis_offender_id).to eq(nomis_offender_id)
+      expect(NewAllocation.coworking.first.pom_detail.nomis_staff_id).to eq(secondary_pom[:staff_id])
 
       expect(page).to have_current_path(unallocated_prison_prisoners_path(prison.code))
 
@@ -137,6 +155,25 @@ feature 'Co-working' do
         secondary_pom_name: secondary_pom[:pom_name],
         recommended_pom_type: 'probation'
       )
+    }
+
+    # Create an existing 'primary' POM allocation to accompany the 'coworking' allocation
+    let!(:new_allocation_primary) {
+      # We have to get_pom_at so the PomDetail record gets automagically created
+      primary_pom = PrisonOffenderManagerService.get_pom_at(prison.code, prison_pom[:staff_id])
+      create(:new_allocation, :primary,
+             case_information: CaseInformation.find_by(nomis_offender_id: nomis_offender_id),
+             pom_detail: PomDetail.find_by(prison_code: prison.code, nomis_staff_id: primary_pom.staff_id)
+      )
+    }
+
+    # Create an existing coworking POM allocation
+    let!(:new_allocation_coworking) {
+      coworking_pom = PrisonOffenderManagerService.get_pom_at(prison.code, secondary_pom[:staff_id])
+      create(:new_allocation, :coworking,
+             case_information: CaseInformation.find_by(nomis_offender_id: nomis_offender_id),
+             pom_detail: PomDetail.find_by(prison_code: prison.code, nomis_staff_id: coworking_pom.staff_id)
+             )
     }
 
     before(:each) do
@@ -173,7 +210,14 @@ feature 'Co-working' do
 
       expect(page).to have_current_path("/prisons/#{prison.code}/coworking/G4273GI/confirm_coworking_removal")
 
+      expect(NewAllocation.count).to eq(2)
+      expect(NewAllocation.coworking.count).to eq(1)
+
       click_button 'Confirm'
+
+      expect(NewAllocation.count).to eq(1)
+      expect(NewAllocation.coworking.count).to be_zero
+
       expect(page).to have_current_path("/prisons/#{prison.code}/allocations/G4273GI")
 
       expect(page).to have_link 'Allocate'

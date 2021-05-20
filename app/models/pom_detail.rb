@@ -8,6 +8,9 @@ class PomDetail < ApplicationRecord
   }
   validates_presence_of :prison_code
 
+  has_many :new_allocations
+  has_many :case_information, through: :new_allocations
+
   def allocations
     @allocations ||= begin
       allocations = Allocation.active_pom_allocations(nomis_staff_id, prison_code).pluck(:nomis_offender_id)
