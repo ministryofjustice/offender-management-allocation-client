@@ -36,7 +36,7 @@ module HmppsApi
 
         true
       rescue JWT::DecodeError, JWT::ExpiredSignature => e
-        Raven.capture_exception(e)
+        Sentry.capture_exception(e)
         false
       end
 

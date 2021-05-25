@@ -95,13 +95,14 @@ Rails.application.configure do
       write_timeout: 1.0,
 
       error_handler: lambda { |method:, returning:, exception:|
-                       # Report errors to Sentry as warnings
-                       Raven.capture_exception exception, level: 'warning',
-                                                          tags: {
-                                                            method: method,
-                                                            returning: returning
-                                                          }
-                     }
+        # Report errors to Sentry as warnings
+        Sentry.capture_exception exception,
+                                 level: 'warning',
+                                 tags: {
+                                     method: method,
+                                     returning: returning
+                                 }
+      }
     }
 
     # Store user sessions in the Redis cache
