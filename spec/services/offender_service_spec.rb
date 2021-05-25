@@ -64,6 +64,7 @@ describe OffenderService, type: :feature do
                   noms_no: nomis_offender_id,
                   offender_manager: "Cheema, Gurnank",
                   service_provider: "NPS",
+                  old_service_provider: "NPS",
                   team_name: "OMU A",
                   tier: "B2")
       end
@@ -163,6 +164,7 @@ describe OffenderService, type: :feature do
             expect(described_class.get_community_data(nomis_offender_id))
                 .to eq(noms_no: nomis_offender_id, tier: 'A', crn: 'X5657657',
                        offender_manager: nil, service_provider: 'NPS', mappa_levels: [],
+                       old_service_provider: 'NPS',
                        team_name: 'Thing', ldu_code: 'LDU123')
           end
         end

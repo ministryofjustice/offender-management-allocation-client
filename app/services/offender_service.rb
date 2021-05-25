@@ -84,7 +84,7 @@ class OffenderService
           noms_no: nomis_offender_id,
           tier: community_info.fetch(:currentTier),
           crn: community_info.dig(:otherIds, :crn),
-
+          old_service_provider: com.dig(:probationArea, :nps) ? 'NPS' : 'CRC',
           service_provider: resourcing.fetch(:enhancedResourcing) ? 'NPS' : 'CRC',
           offender_manager: com.dig(:staff, :unallocated) ? nil : "#{com.dig(:staff, :surname)}, #{com.dig(:staff, :forenames)}",
           team_name: com.dig(:team, :description),
