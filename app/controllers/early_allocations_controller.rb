@@ -36,6 +36,7 @@ class EarlyAllocationsController < PrisonsApplicationController
       if @early_allocation.eligible?
         @early_allocation.save!
         if @prisoner.within_early_allocation_window?
+          @prisoner.trigger_early_allocation_event
           AutoEarlyAllocationEmailJob.perform_later(@prison, @prisoner.offender_no, Base64.encode64(pdf_as_string))
         end
         render 'landing_eligible'
@@ -90,6 +91,7 @@ class EarlyAllocationsController < PrisonsApplicationController
     @early_allocation = @prisoner.early_allocations.last
 
     if @early_allocation.update(community_decision_params)
+      @prisoner.trigger_early_allocation_event
       redirect_to prison_prisoner_path(@prison.code, @early_allocation.nomis_offender_id)
     else
       render 'edit'

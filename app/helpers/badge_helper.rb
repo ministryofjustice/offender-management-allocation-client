@@ -22,14 +22,4 @@ module BadgeHelper
   def parole_review_date?(offender)
     offender.indeterminate_sentence? && offender.parole_review_date.present?
   end
-
-  def early_allocation_notes?(early_allocations)
-    if early_allocations.present?
-      !early_allocations.last.created_within_referral_window? || early_allocations.last.community_decision == false
-    end
-  end
-
-  def early_allocation_active?(early_allocations)
-    early_allocations.present? && early_allocations.last.awaiting_community_decision?
-  end
 end

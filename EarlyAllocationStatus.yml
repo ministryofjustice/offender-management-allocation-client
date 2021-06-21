@@ -1,0 +1,30 @@
+asyncapi: 2.0.0
+info:
+  title: Community Offender Manager Early Allocation Status
+  version: '1'
+  description: Events concerning the changing of an offender's early allocation status
+  contact:
+    name: Manage POM Cases team
+    email: elephants@digital.justice.gov.uk
+channels:
+  hmpps-domain-events-topic:
+    description: Default Notification Channel for HMPSS domain events
+    publish:
+      message:
+        $ref: '#/components/messages/community-early-allocation-eligibility.status.changed'
+      bindings:
+        sns:
+          is: notification service
+components:
+  messages:
+    community-early-allocation-eligibility.status.changed:
+      payload:
+        type: object
+        properties:
+          offenderNo:
+            type: string
+            description: NOMIS Offender Number
+          eligibilityStatus:
+            type: boolean
+            description: community early allocation eligibility
+        example: {offenderNo: A123456BC, eligibilityStatus: true}

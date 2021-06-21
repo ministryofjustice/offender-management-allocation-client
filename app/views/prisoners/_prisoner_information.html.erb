@@ -29,10 +29,10 @@
       <td class="govuk-table__cell">Early allocation referral</td>
       <td class="govuk-table__cell table_cell__left_align">
         <span id="early_allocation_status">
-          <%= early_allocation_status(@prisoner.early_allocations, @prisoner) %>
+          <%= early_allocation_status_text(@prisoner) %>
         </span>
         <span id="early_allocation_action" class="pull-right">
-          <%= early_allocation_action_link(@prisoner.early_allocations, @prisoner, @prison) %>
+          <%= early_allocation_action_link(@prisoner, @prison) %>
         </span>
       </td>
     </tr>

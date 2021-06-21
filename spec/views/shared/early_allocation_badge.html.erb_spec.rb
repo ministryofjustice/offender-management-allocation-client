@@ -28,7 +28,7 @@ RSpec.describe "prisoners/show", type: :view do
         it 'displays a badge text EARLY ALLOCATION NOTES' do
           expect(badge_count).to eq(1)
           expect(early_allocation_badge.attributes['class'].value).to include 'moj-badge--blue'
-          expect(early_allocation_badge.text).to eq 'EARLY ALLOCATION NOTES'
+          expect(early_allocation_badge.text.strip).to eq 'EARLY ALLOCATION ASSESSMENT SAVED'
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe "prisoners/show", type: :view do
           it 'displays badge text EARLY ALLOCATION NOTES' do
             expect(badge_count).to eq(1)
             expect(early_allocation_badge.attributes['class'].value).to include 'moj-badge--blue'
-            expect(early_allocation_badge.text).to eq 'EARLY ALLOCATION NOTES'
+            expect(early_allocation_badge.text.strip).to eq 'EARLY ALLOCATION ASSESSMENT SAVED'
           end
         end
 
@@ -52,7 +52,7 @@ RSpec.describe "prisoners/show", type: :view do
           it 'displays badge text EARLY ALLOCATION ACTIVE' do
             expect(badge_count).to eq(1)
             expect(early_allocation_badge.attributes['class'].value).to include 'moj-badge--blue'
-            expect(early_allocation_badge.text).to eq 'EARLY ALLOCATION ACTIVE'
+            expect(early_allocation_badge.text.strip).to eq 'EARLY ALLOCATION DECISION PENDING'
           end
         end
 
@@ -62,7 +62,7 @@ RSpec.describe "prisoners/show", type: :view do
           it 'displays badge text EARLY ALLOCATION APPROVED' do
             expect(badge_count).to eq(1)
             expect(early_allocation_badge.attributes['class'].value).to include 'moj-badge--blue'
-            expect(early_allocation_badge.text).to eq 'EARLY ALLOCATION APPROVED'
+            expect(early_allocation_badge.text.strip).to eq 'EARLY ALLOCATION ELIGIBLE'
           end
         end
 
@@ -71,7 +71,7 @@ RSpec.describe "prisoners/show", type: :view do
 
           it 'displays badge text EARLY ALLOCATION APPROVED' do
             expect(early_allocation_badge.attributes['class'].value).to include 'moj-badge--blue'
-            expect(early_allocation_badge.text).to eq 'EARLY ALLOCATION APPROVED'
+            expect(early_allocation_badge.text.strip).to eq 'EARLY ALLOCATION ELIGIBLE'
           end
         end
       end

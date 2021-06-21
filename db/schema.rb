@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_085128) do
+ActiveRecord::Schema.define(version: 2021_07_16_080850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 2021_07_09_085128) do
     t.index ["primary_pom_nomis_id"], name: "index_allocation_history_on_primary_pom_nomis_id"
     t.index ["prison"], name: "index_allocation_history_on_prison"
     t.index ["secondary_pom_nomis_id"], name: "index_allocation_versions_secondary_pom_nomis_id"
+  end
+
+  create_table "calculated_early_allocation_statuses", primary_key: "nomis_offender_id", id: :string, force: :cascade do |t|
+    t.boolean "eligible", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "calculated_handover_dates", force: :cascade do |t|
@@ -210,14 +216,12 @@ ActiveRecord::Schema.define(version: 2021_07_09_085128) do
   end
 
   create_table "victim_liaison_officers", force: :cascade do |t|
-    t.bigint "case_information_id", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "nomis_offender_id", limit: 7, null: false
-    t.index ["case_information_id"], name: "index_victim_liaison_officers_on_case_information_id"
     t.index ["nomis_offender_id"], name: "index_victim_liaison_officers_on_nomis_offender_id"
   end
 
