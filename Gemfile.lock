@@ -567,7 +567,7 @@ DEPENDENCIES
   timecop
   turbolinks (~> 5)
   turnout
-  typhoeus
+  typhoeus (>= 1.4)
   tzinfo-data
   uglifier (>= 1.3.0)
   undercover

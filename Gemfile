@@ -29,7 +29,7 @@ gem 'sidekiq', '>= 6.1.2'
 gem 'sentry-raven'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
-gem 'typhoeus'
+gem 'typhoeus', '>= 1.4'
 gem 'redis'
 gem 'fast_underscore', require: false
 gem 'flipflop'

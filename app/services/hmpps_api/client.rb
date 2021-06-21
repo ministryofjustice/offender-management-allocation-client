@@ -5,17 +5,38 @@ require 'typhoeus/adapters/faraday'
 
 module HmppsApi
   class Client
+    # Beyond 8 retries the backoff becomes e.g. 12 seconds at 10 retries
+    MAX_RETRIES = 8
     def initialize(root)
       @root = root
+      retry_options = {
+          max: MAX_RETRIES,
+          # some useful values as per the Faraday documentation
+          # https://lostisland.github.io/faraday/middleware/retry
+          # for some reason this middleware doesn't provide sensible defaults
+          # but does have some good suggestions in the documentation
+          interval: 0.05,
+          interval_randomness: 0.5,
+          backoff_factor: 2,
+          # we seem to get 502 and 504 statuses from a gateway this side of
+          # the Prison API - cso retry if we get one of those.
+          retry_statuses: [502, 504],
+          exceptions: Faraday::Request::Retry::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed, Faraday::ServerError],
+          # Faraday by default doesn't retry on a POST - even though our POSTs are GETs in disguise.
+          methods: Faraday::Request::Retry::IDEMPOTENT_METHODS + [:post],
+          #retry_if: ->(_env, _exception) { true },
+          retry_block: ->(env, _options, retries_left, exception) {
+            retries = MAX_RETRIES - retries_left
+            # This is purely for debugging, and probably shouldn't make it to production
+            puts("#{Time.zone.now} Retry ##{retries} for #{env.url} with status [#{env.status}] exception #{exception.inspect}")
+            Rails.logger.warn("#{Time.zone.now} Retry ##{retries} for #{env.url} with status [#{env.status}] exception #{exception.inspect}")
+          }
+      }
       @connection = Faraday.new do |faraday|
-        faraday.request :retry, max: 3, interval: 0.05,
-                        interval_randomness: 0.5, backoff_factor: 2,
-                        # Note - this might break if we ever use an API that uses a real POST
-                        # rather than the fake GETs used by the Prison API
-                        methods: Faraday::Request::Retry::IDEMPOTENT_METHODS + [:post],
-                        exceptions: [Faraday::ServerError, 'Timeout::Error']
-
         faraday.options.params_encoder = Faraday::FlatParamsEncoder
+
+        # This is adding 2 pieces of request middleware and 1 piece of response middleware
+        faraday.request :retry, retry_options
         faraday.request :instrumentation
         # Response middleware is supposed to be registered after request middleware
         faraday.response :raise_error

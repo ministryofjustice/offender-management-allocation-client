@@ -236,10 +236,6 @@ jobs:
             ALLOCATION_MANAGER_HOST: https://allocation-manager-staging.apps.live-1.cloud-platform.service.justice.gov.uk
             RAILS_ENV: test
             RACK_ENV: test
-      - run:
-          name: Check Coverage using undercover gem
-          command: |
-            bundle exec undercover --compare origin/main -l coverage/lcov.info
       - store_test_results:
           path: coverage
       - store_artifacts:

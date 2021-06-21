@@ -64,7 +64,7 @@ RSpec.describe RecalculateHandoverDateJob, type: :job do
     let(:nomis_offender) { build(:nomis_offender) }
     let(:api_host) { Rails.configuration.prison_api_host }
     let(:stub_url) { "#{api_host}/api/prisoners/#{offender_no}" }
-    let(:status) { 502 }
+    let(:status) { 500 }
 
     before do
       stub_offender(nomis_offender)
