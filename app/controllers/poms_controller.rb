@@ -22,6 +22,7 @@ class PomsController < PrisonStaffApplicationController
 
   def edit
     @errors = {}
+    @referrer = referrer_or_root
   end
 
   def update

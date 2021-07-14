@@ -65,6 +65,10 @@ private
     session[:referrer] || request.referer || root_path
   end
 
+  def referrer_or_root
+    request.referer || root_path
+  end
+
   def store_referrer_in_session
     session[:referrer] = request.referer
   end
