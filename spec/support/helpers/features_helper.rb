@@ -7,7 +7,13 @@ module FeaturesHelper
     else
       mock_sso_response('MOIC_POM', [SsoIdentity::SPO_ROLE], prisons)
     end
+    stub_user(staff_id: 1)
   end
+
+  # def signin_spo_user(prisons = %w[LEI RSI], name = 'MOIC_POM')
+  #   mock_sso_response(name, [SsoIdentity::SPO_ROLE], prisons)
+  #   stub_user(staff_id: 1)
+  # end
 
   def stub_signin_spo(pom, prisons = ['LEI'])
     stub_auth_token
@@ -24,12 +30,7 @@ module FeaturesHelper
 
   def signin_spo_pom_user(prisons = %w[LEI RSI], name = 'MOIC_POM')
     mock_sso_response(name, [SsoIdentity::SPO_ROLE, SsoIdentity::POM_ROLE], prisons)
-    stub_user(staff_id: 1 )
-  end
-
-  def signin_spo_user(prisons = %w[LEI RSI], name = 'MOIC_POM')
-    mock_sso_response(name, [SsoIdentity::SPO_ROLE], prisons)
-    stub_user(staff_id: 1 )
+    stub_user(staff_id: 1)
   end
 
   def signin_global_admin_user

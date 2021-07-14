@@ -113,5 +113,4 @@ feature "get poms list" do
     expect(page).to have_content("Working pattern")
     expect(page).to have_content("Status")
   end
-
 end

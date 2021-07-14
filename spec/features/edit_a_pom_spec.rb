@@ -124,7 +124,7 @@ feature "edit a POM's details" do
   end
 
   context 'without VCR' do
-    let!(:pom_detail) {create(:pom_detail, prison: prison)}
+    let!(:pom_detail) { create(:pom_detail, prison: prison) }
 
     before do
       stub_auth_token
