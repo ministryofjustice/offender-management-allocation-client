@@ -5,7 +5,7 @@ class CaseInformationController < PrisonsApplicationController
   before_action :set_case_info, only: [:edit, :show]
 
   before_action :set_referrer
-  before_action :store_referrer_in_session, only: [:edit_prd]
+  before_action :store_referrer_in_session, only: [:edit_prd, :edit]
 
   def new
     @case_info = Offender.find_by!(nomis_offender_id: nomis_offender_id_from_url).build_case_information
@@ -64,7 +64,7 @@ class CaseInformationController < PrisonsApplicationController
     @prisoner = prisoner(case_information_params[:nomis_offender_id])
     # Nothing here can fail due to radio buttons being unselectable
     @case_info.update!(case_information_params.merge(manual_entry: true))
-    redirect_to prison_prisoner_staff_index_path(active_prison_id, @case_info.nomis_offender_id)
+    redirect_to referrer
   end
 
 private
