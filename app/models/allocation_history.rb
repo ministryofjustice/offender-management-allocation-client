@@ -40,9 +40,6 @@ class AllocationHistory < ApplicationRecord
     offender_released: OFFENDER_RELEASED
   }
 
-  scope :allocations, lambda { |nomis_offender_ids|
-    where(nomis_offender_id: nomis_offender_ids)
-  }
   scope :active_pom_allocations, lambda { |nomis_staff_id, prison|
     secondaries = where(secondary_pom_nomis_id: nomis_staff_id)
 

@@ -69,8 +69,4 @@ class AllocationService
 
     pom_ids.index_with { |pom_id| HmppsApi::PrisonApi::PrisonOffenderManagerApi.fetch_email_addresses(pom_id).first }
   end
-
-  def self.current_allocation_for(nomis_offender_id)
-    AllocationHistory.allocations(nomis_offender_id).last
-  end
 end
