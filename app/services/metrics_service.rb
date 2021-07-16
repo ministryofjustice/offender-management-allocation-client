@@ -4,6 +4,7 @@
 # a null client to dump all of the requests to /dev/null (figuratively)
 # rather than expecting the prometheus_exporter process to be running.
 if Rails.configuration.collect_prometheus_metrics
+  # never switched on in test env
   #:nocov:
   require 'prometheus_exporter/client'
   ClientClass = PrometheusExporter::Client

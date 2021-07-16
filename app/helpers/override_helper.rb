@@ -7,7 +7,10 @@ module OverrideHelper
       'Probation POM allocated instead of recommended Prison POM'
     elsif allocation.recommended_pom_type &&
       allocation.recommended_pom_type == 'probation'
+      # POM-778 Just not covered by tests
+      #:nocov:
       'Prison POM allocated instead of recommended Probation POM'
+      #:nocov:
     else
       'Prisoner not allocated to recommended POM'
     end
@@ -46,9 +49,12 @@ private
         POM despite tiering calculation", class: 'govuk-body govuk-!-margin-bottom-1') +
       tag.p(allocation.suitability_detail, class: 'govuk-body govuk-!-margin-bottom-1')
     else
+      # POM-778 Just not covered by tests
+      #:nocov:
       tag.p(' - Prisoner assessed as suitable for recommended POM despite tiering
         calculation', class: 'govuk-body govuk-!-margin-bottom-1')
       tag.p(allocation.suitability_detail, class: 'govuk-body govuk-!-margin-bottom-1')
+      #:nocov:
     end
   end
 end

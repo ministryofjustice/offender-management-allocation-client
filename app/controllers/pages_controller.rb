@@ -45,7 +45,10 @@ private
 
   def redirect_path
     if current_user.present?
+      # POM_778: just not covered by tests
+      #:nocov:
       redirect_to prison_dashboard_index_path(@user.active_case_load_id)
+      #:nocov:
     else
       redirect_to help_path
     end

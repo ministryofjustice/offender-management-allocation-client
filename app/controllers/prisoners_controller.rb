@@ -42,7 +42,10 @@ class PrisonersController < PrisonsApplicationController
     end
 
     if @allocation.present? && @allocation.secondary_pom_name.present?
+      # POM-778 Just not covered by tests
+      #:nocov:
       @secondary_pom_name = PrisonOffenderManagerService.fetch_pom_name(@allocation.secondary_pom_nomis_id).titleize
+      #:nocov:
     end
 
     @keyworker = HmppsApi::KeyworkerApi.get_keyworker(

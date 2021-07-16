@@ -6,7 +6,10 @@ module PageHelper
         request.env['HTTP_REFERER'] != request.env['REQUEST_URI']
       link_to('Back', :back, class: class_name)
     else
+      # POM-778 Just not covered by tests
+      #:nocov:
       link_to('Back', root_path, class: class_name)
+      #:nocov:
     end
   end
 

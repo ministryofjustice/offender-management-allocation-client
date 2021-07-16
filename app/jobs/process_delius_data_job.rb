@@ -27,7 +27,10 @@ private
     offender = OffenderService.get_offender(delius_record.noms_no)
 
     if offender.nil?
+      # POM-778 Just not covered by tests
+      #:nocov:
       return logger.error("[DELIUS] Failed to retrieve NOMIS record #{delius_record.noms_no}")
+      #:nocov:
     end
 
     process_record(delius_record) if offender.convicted?

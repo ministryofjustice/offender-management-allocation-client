@@ -64,7 +64,10 @@ private
     @roles ||= if @sso_identity.present?
                  @sso_identity[:roles]
                else
+                 # POM-778 Just not covered by tests
+                 #:nocov:
                  []
+                 #:nocov:
                end
   end
 end
