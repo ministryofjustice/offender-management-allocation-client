@@ -6,7 +6,6 @@ feature 'complexity level feature' do
   let(:offenders) { [offender] }
   let(:pom) { build(:pom) }
   let(:spo) { build(:pom) }
-  let(:test_strategy) { Flipflop::FeatureSet.current.test! }
   let(:offender_no) { offender.fetch(:offenderNo) }
 
 
@@ -20,7 +19,7 @@ feature 'complexity level feature' do
     stub_keyworker(womens_prison.code, offender.fetch(:offenderNo), build(:keyworker))
   end
 
-  context 'when on prisoner profile page' do
+  context 'when on allocation information page' do
     it 'can update the complexity level journey' do
       expect(HmppsApi::ComplexityApi).to receive(:save).with(offender.fetch(:offenderNo), level: 'low', username: "MOIC_POM", reason: 'bla bla bla')
 
