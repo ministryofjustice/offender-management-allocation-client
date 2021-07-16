@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VictimLiaisonOfficersController < PrisonsApplicationController
-  before_action :load_case_information
+  before_action :load_offender
   before_action :find_vlo, only: [:edit, :update, :destroy, :delete]
   before_action :store_referrer_in_session, only: [:new, :edit, :delete]
   before_action :set_referrer
@@ -20,11 +20,11 @@ class VictimLiaisonOfficersController < PrisonsApplicationController
   end
 
   def new
-    @vlo = @case_information.victim_liaison_officers.new
+    @vlo = @offender.victim_liaison_officers.new
   end
 
   def create
-    @vlo = @case_information.victim_liaison_officers.new vlo_parameters
+    @vlo = @offender.victim_liaison_officers.new vlo_parameters
 
     if @vlo.save
       redirect_to referrer
@@ -60,7 +60,7 @@ private
     params.require(:victim_liaison_officer).permit(:first_name, :last_name, :email)
   end
 
-  def load_case_information
-    @case_information = Offender.find_by!(nomis_offender_id: params[:prisoner_id]).case_information
+  def load_offender
+    @offender = OffenderService.get_offender(params[:prisoner_id])
   end
 end

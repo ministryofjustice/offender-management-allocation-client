@@ -87,7 +87,7 @@ RSpec.describe AllocationsController, type: :controller do
 
       context 'with a VictimLiasonOfficer' do
         before do
-          case_info = create(:case_information, victim_liaison_officers: [build(:victim_liaison_officer)])
+          case_info = create(:case_information, offender: build(:offender, victim_liaison_officers: [build(:victim_liaison_officer)]))
           create(:allocation_history, prison: prison_code, nomis_offender_id: case_info.nomis_offender_id)
           stub_offender(build(:nomis_offender, offenderNo: case_info.nomis_offender_id))
           stub_movements_for case_info.nomis_offender_id, [attributes_for(:movement)]
@@ -106,8 +106,8 @@ RSpec.describe AllocationsController, type: :controller do
 
         context 'with update and delete VLO events' do
           before do
-            case_info.victim_liaison_officers.first.update!(first_name: 'Bill', last_name: 'Smuggs')
-            case_info.victim_liaison_officers.first.destroy
+            case_info.offender.victim_liaison_officers.first.update!(first_name: 'Bill', last_name: 'Smuggs')
+            case_info.offender.victim_liaison_officers.first.destroy
             allocation.update!(
               primary_pom_nomis_id: poms.second.staffId,
               event: AllocationHistory::REALLOCATE_PRIMARY_POM

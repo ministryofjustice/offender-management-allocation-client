@@ -47,7 +47,7 @@ feature 'View a prisoner profile page' do
 
   context 'with an allocation', :allocation do
     before do
-      create(:case_information, offender: build(:offender, nomis_offender_id: 'G7266VD'), victim_liaison_officers: [build(:victim_liaison_officer)])
+      create(:case_information, offender: build(:offender, nomis_offender_id: 'G7266VD', victim_liaison_officers: [build(:victim_liaison_officer)]))
       create(:allocation_history, :co_working, prison: prison.code, nomis_offender_id: 'G7266VD', primary_pom_nomis_id: '485637', primary_pom_name: 'Pobno, Kath')
     end
 

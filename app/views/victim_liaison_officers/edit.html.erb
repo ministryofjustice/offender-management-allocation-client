@@ -9,4 +9,4 @@
 <%= render 'form',
            vlo: @vlo,
            form_action: :patch,
-           form_url: prison_prisoner_victim_liaison_officer_path(@prison.code, @vlo.case_information.nomis_offender_id, @vlo.id) %>
+           form_url: prison_prisoner_victim_liaison_officer_path(@prison.code, @vlo.nomis_offender_id, @vlo.id) %>

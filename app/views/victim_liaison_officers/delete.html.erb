@@ -9,7 +9,7 @@ Contact details for the VLO <%= @vlo.full_name %> will be removed from the priso
 </p>
 
 <%= form_for(@vlo,
-             url: prison_prisoner_victim_liaison_officer_path(@prison.code, @vlo.case_information.nomis_offender_id, @vlo.id),
+             url: prison_prisoner_victim_liaison_officer_path(@prison.code, @vlo.nomis_offender_id, @vlo.id),
              method: :delete,
              builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
 

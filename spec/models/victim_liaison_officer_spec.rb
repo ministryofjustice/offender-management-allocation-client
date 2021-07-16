@@ -7,12 +7,12 @@ RSpec.describe VictimLiaisonOfficer, type: :model do
     expect(subject).to validate_presence_of :email
   end
 
-  context 'with case information record' do
+  context 'with an offender record' do
     before do
-      create(:case_information, victim_liaison_officers: [build(:victim_liaison_officer)])
+      create(:offender, victim_liaison_officers: [build(:victim_liaison_officer)])
     end
 
-    let(:ci) { CaseInformation.last }
+    let(:offender) { Offender.last }
 
     it 'checks the format of emails' do
       expect(build(:victim_liaison_officer)).to be_valid
@@ -20,9 +20,9 @@ RSpec.describe VictimLiaisonOfficer, type: :model do
       expect(build(:victim_liaison_officer, email: 'BOGUS !')).not_to be_valid
     end
 
-    it 'belongs to a case information record and is destroyed with it' do
+    it 'belongs to a offender record and is destroyed with it' do
       expect {
-        ci.destroy
+        offender.destroy
       }.to change(described_class, :count).by(-1)
     end
   end

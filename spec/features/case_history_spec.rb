@@ -462,7 +462,7 @@ feature 'Case History' do
 
       before do
         Timecop.travel tomorrow do
-          create(:victim_liaison_officer, case_information: case_info)
+          create(:victim_liaison_officer, offender: case_info.offender)
         end
         Timecop.travel day_after
         AllocationHistory.deallocate_primary_pom pom.staff_id, open_prison.code

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_085128) do
+ActiveRecord::Schema.define(version: 2021_07_16_080850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,14 +210,12 @@ ActiveRecord::Schema.define(version: 2021_07_09_085128) do
   end
 
   create_table "victim_liaison_officers", force: :cascade do |t|
-    t.bigint "case_information_id", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "nomis_offender_id", limit: 7, null: false
-    t.index ["case_information_id"], name: "index_victim_liaison_officers_on_case_information_id"
     t.index ["nomis_offender_id"], name: "index_victim_liaison_officers_on_nomis_offender_id"
   end
 
