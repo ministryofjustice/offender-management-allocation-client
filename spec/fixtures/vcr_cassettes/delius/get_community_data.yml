@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/G0239GU/all
+    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/A5194DY/all
     body:
       encoding: US-ASCII
       string: ''
@@ -16,47 +16,43 @@ http_interactions:
       code: 200
       message:
     headers:
-      Date:
-      - Thu, 18 Mar 2021 08:52:29 GMT
-      Content-Type:
+      date:
+      - Thu, 13 May 2021 12:41:21 GMT
+      content-type:
       - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Request-Context:
-      - appId=cid-v1:0d5d6f09-1d07-47f5-9d3a-f9f473544e78
-      X-Content-Type-Options:
+      request-context:
+      - appId=0d5d6f09-1d07-47f5-9d3a-f9f473544e78
+      x-content-type-options:
       - nosniff
-      X-XSS-Protection:
+      x-xss-protection:
       - 1; mode=block
-      Cache-Control:
+      cache-control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
+      pragma:
       - no-cache
-      Expires:
+      expires:
       - '0'
-      X-Frame-Options:
+      x-frame-options:
       - DENY
       vary:
       - accept-encoding
     body:
       encoding: UTF-8
-      string: '{"offenderId":2500423770,"firstName":"Izgyneing","surname":"Claytael","dateOfBirth":"1980-01-01","gender":"Male","otherIds":{"crn":"X362207","nomsNumber":"G0239GU"},"contactDetails":{},"offenderProfile":{"offenderLanguages":{},"previousConviction":{}},"offenderManagers":[{"trustOfficer":{"forenames":"Unallocated
-        Staff(N07)","surname":"Staff"},"staff":{"code":"N07UATU","forenames":"Unallocated
-        Staff(N07)","surname":"Staff","unallocated":true},"partitionArea":"National
-        Data","softDeleted":false,"team":{"code":"N07UAT","description":"Unallocated
-        Team(N07)","localDeliveryUnit":{"code":"N07NPSA","description":"N07 Division"},"district":{"code":"N07NPSA","description":"N07
-        Division"},"borough":{"code":"N07100","description":"N07 Cluster 1"}},"probationArea":{"code":"N07","description":"NPS
-        London","nps":true},"fromDate":"1900-01-01","active":true,"allocationReason":{"code":"IN1","description":"Initial
-        Allocation"}}],"softDeleted":false,"currentDisposal":"1","partitionArea":"National
+      string: '{"offenderId":2500387823,"firstName":"Harry","middleNames":["Mike","Bob"],"surname":"Kane","dateOfBirth":"1993-07-28","gender":"Male","otherIds":{"crn":"X349420","nomsNumber":"A5194DY","mostRecentPrisonerNumber":"38500A"},"contactDetails":{"addresses":[{"from":"2020-07-13","noFixedAbode":false,"buildingName":"Tottenham
+        Hotspur Stadium","streetName":"High Street","town":"Lodon","postcode":"N17
+        1BB","status":{"code":"M","description":"Main"}}]},"offenderProfile":{"offenderLanguages":{},"offenderDetails":"Some
+        notes","remandStatus":"Bail - Conditional","previousConviction":{}},"offenderAliases":[{"id":"2500079684","dateOfBirth":"1996-04-11","firstName":"Dele","surname":"Alli","gender":"Male"},{"id":"2500079685","dateOfBirth":"1986-12-26","firstName":"Hugo","surname":"Lloris","gender":"Male"}],"offenderManagers":[{"trustOfficer":{"forenames":"Gurnank","surname":"Cheema"},"staff":{"code":"N07A516","forenames":"Gurnank","surname":"Cheema","unallocated":false},"partitionArea":"National
+        Data","softDeleted":false,"team":{"code":"N07T01","description":"OMU A","localDeliveryUnit":{"code":"N07NPSA","description":"N07
+        Division"},"district":{"code":"N07NPSA","description":"N07 Division"},"borough":{"code":"N07100","description":"N07
+        Cluster 1"}},"probationArea":{"code":"N07","description":"NPS London","nps":true},"fromDate":"2021-02-15","active":true,"allocationReason":{"code":"RO","description":"Allocated
+        To Responsible Officer"}}],"softDeleted":false,"currentDisposal":"1","partitionArea":"National
         Data","currentRestriction":false,"restrictionMessage":"This is a restricted
         offender record. Please contact a system administrator","currentExclusion":false,"exclusionMessage":"You
-        are excluded from viewing this offender record. Please contact a system administrator","currentTier":"A-2","activeProbationManagedSentence":true}'
-  recorded_at: Thu, 18 Mar 2021 08:52:29 GMT
+        are excluded from viewing this offender record. Please contact a system administrator","currentTier":"B2","activeProbationManagedSentence":true}'
+  recorded_at: Thu, 13 May 2021 12:41:21 GMT
 - request:
     method: get
-    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/G0239GU/registrations
+    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/A5194DY/registrations
     body:
       encoding: US-ASCII
       string: ''
@@ -70,38 +66,77 @@ http_interactions:
       code: 200
       message:
     headers:
-      Date:
-      - Thu, 18 Mar 2021 08:52:29 GMT
-      Content-Type:
+      date:
+      - Thu, 13 May 2021 12:41:21 GMT
+      content-type:
       - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Request-Context:
-      - appId=cid-v1:0d5d6f09-1d07-47f5-9d3a-f9f473544e78
-      X-Content-Type-Options:
+      request-context:
+      - appId=0d5d6f09-1d07-47f5-9d3a-f9f473544e78
+      x-content-type-options:
       - nosniff
-      X-XSS-Protection:
+      x-xss-protection:
       - 1; mode=block
-      Cache-Control:
+      cache-control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
+      pragma:
       - no-cache
-      Expires:
+      expires:
       - '0'
-      X-Frame-Options:
+      x-frame-options:
       - DENY
       vary:
       - accept-encoding
     body:
       encoding: UTF-8
-      string: '{"registrations":[{"registrationId":2500128258,"offenderId":2500423770,"register":{"code":"5","description":"Public
-        Protection"},"type":{"code":"MAPP","description":"MAPPA"},"riskColour":"Red","startDate":"2020-10-30","nextReviewDate":"2021-01-30","reviewPeriodMonths":3,"notes":"Please
+      string: '{"registrations":[{"registrationId":2500128757,"offenderId":2500387823,"register":{"code":"5","description":"Public
+        Protection"},"type":{"code":"MAPP","description":"MAPPA"},"riskColour":"Red","startDate":"2020-11-02","reviewPeriodMonths":3,"notes":"Please
         Note - Category 3 offenders require multi-agency management at Level 2 or
-        3 and should not be recorded at Level 1.","registeringTeam":{"code":"N07UAT","description":"Unallocated
-        Team(N07)"},"registeringOfficer":{"code":"N07A003","forenames":"Unallocate","surname":"Unallocate","unallocated":false},"registeringProbationArea":{"code":"N07","description":"NPS
-        London"},"registerLevel":{"code":"M2","description":"MAPPA Level 2"},"registerCategory":{"code":"M2","description":"MAPPA
-        Cat 2"},"warnUser":false,"active":true,"numberOfPreviousDeregistrations":0}]}'
-  recorded_at: Thu, 18 Mar 2021 08:52:29 GMT
+        3 and should not be recorded at Level 1.\nStill here","registeringTeam":{"code":"N07T01","description":"OMU
+        A"},"registeringOfficer":{"code":"N07A065","forenames":"Andy Ramond","surname":"Adamczak","unallocated":false},"registeringProbationArea":{"code":"N07","description":"NPS
+        London"},"registerLevel":{"code":"M2","description":"MAPPA Level 2"},"registerCategory":{"code":"M1","description":"MAPPA
+        Cat 1"},"warnUser":false,"active":false,"endDate":"2020-12-17","deregisteringTeam":{"code":"N07T02","description":"OMU
+        B"},"deregisteringOfficer":{"code":"N07A066","forenames":"Andy","surname":"Aemmer","unallocated":false},"deregisteringProbationArea":{"code":"N07","description":"NPS
+        London"},"numberOfPreviousDeregistrations":1}]}'
+  recorded_at: Thu, 13 May 2021 12:41:21 GMT
+- request:
+    method: get
+    uri: https://community-api-secure.test.delius.probation.hmpps.dsd.io/secure/offenders/nomsNumber/A5194DY/risk/resourcing/latest
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - authorisation_header
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Thu, 13 May 2021 12:41:21 GMT
+      content-type:
+      - application/json
+      request-context:
+      - appId=0d5d6f09-1d07-47f5-9d3a-f9f473544e78
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      pragma:
+      - no-cache
+      expires:
+      - '0'
+      x-frame-options:
+      - DENY
+      vary:
+      - accept-encoding
+    body:
+      encoding: UTF-8
+      string: '{"decision":{"date":"2021-04-09","code":"R","description":"Retained
+        / Enhanced Resourcing"},"enhancedResourcing":true,"relatedConvictionId":2500365819}'
+  recorded_at: Thu, 13 May 2021 12:41:21 GMT
 recorded_with: VCR 6.0.0

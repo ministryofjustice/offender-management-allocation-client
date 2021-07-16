@@ -27,6 +27,13 @@ module HmppsApi
       self.client.get(route)
     end
 
+    def self.get_latest_resourcing nomis_offender_id
+      safe_offender_no = URI.encode_www_form_component(nomis_offender_id)
+      route = "/offenders/nomsNumber/#{safe_offender_no}/risk/resourcing/latest"
+
+      self.client.get(route)
+    end
+
     def self.set_pom(offender_no:, prison:, forename:, surname:)
       safe_offender_no = URI.encode_www_form_component(offender_no)
       route = "/offenders/nomsNumber/#{safe_offender_no}/prisonOffenderManager"
