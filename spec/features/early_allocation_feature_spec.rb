@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature "early allocation", type: :feature do
+feature "early allocation", :disable_early_allocation_event, type: :feature do
   let(:nomis_staff_id) { 485_926 }
   # any date less than 3 months
   let(:valid_date) { Time.zone.today - 2.months }
@@ -184,7 +184,7 @@ feature "early allocation", type: :feature do
           end
 
           context 'with discretionary path' do
-            let(:early_allocation_badge) { page.find('#early-allocation-badge') }
+            let(:early_allocation_state) { page.find('#early-allocation-badge') }
 
             before do
               discretionary_discretionary_answers
@@ -237,7 +237,6 @@ feature "early allocation", type: :feature do
               click_button('Save')
 
               # Profile page
-              expect(early_allocation_badge.text).to include 'EARLY ALLOCATION APPROVED'
               expect(page).to have_text 'Eligible - case handover date has been updated'
               expect(page).to have_link 'View assessment'
 

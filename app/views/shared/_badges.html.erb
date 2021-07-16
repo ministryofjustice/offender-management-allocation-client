@@ -2,12 +2,11 @@
 <%= render('shared/badges/recall_badge') if offender.recalled? %>
 <%= render('shared/badges/parole_badge') if badge_for_parole?(offender) %>
 
-<% if offender.early_allocation? %>
-  <%=  render('shared/badges/early_allocation_approved_badge') %>
-<% elsif early_allocation_active?(offender.early_allocations) %>
-  <%= render('shared/badges/early_allocation_active_badge') %>
-<% elsif early_allocation_notes?(offender.early_allocations) %>
-  <%= render('shared/badges/early_allocation_notes_badge')%>
+<% status = offender.early_allocation_state %>
+<% if EarlyAllocationHelper::EARLY_ALLOCATION_STATUSES.key?(status) %>
+  <span id="early-allocation-badge" class="moj-badge moj-badge--blue">
+    EARLY ALLOCATION <%= EarlyAllocationHelper::EARLY_ALLOCATION_STATUSES.fetch(status) %>
+  </span>
 <% end %>
 <% if @prison.womens? %>
   <% if offender.complexity_level == 'high' %>

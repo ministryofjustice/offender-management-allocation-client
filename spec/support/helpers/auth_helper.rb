@@ -3,6 +3,14 @@
 module AuthHelper
   ACCESS_TOKEN = Struct.new(:access_token).new('an-access-token')
 
+  def auth_header
+    oauth_client = HmppsApi::Oauth::Client.new(Rails.configuration.nomis_oauth_host)
+    route = "/auth/oauth/token?grant_type=client_credentials"
+    response = oauth_client.post(route)
+    access_token = response.fetch("access_token")
+    "Bearer #{access_token}"
+  end
+
   def stub_auth_token
     allow(HmppsApi::Oauth::TokenService).to receive(:valid_token).and_return(ACCESS_TOKEN)
 

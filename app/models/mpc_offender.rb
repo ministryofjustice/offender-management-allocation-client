@@ -86,7 +86,7 @@ class MpcOffender
 
   # Early allocation methods
   def early_allocation?
-    latest_early_allocation.present?
+    latest_early_allocation.present? && !licence_expiry_date&.before?(Time.zone.today)
   end
 
   def latest_early_allocation
@@ -153,7 +153,42 @@ class MpcOffender
     @offender.parole_record.parole_review_date if @offender.parole_record.present?
   end
 
+  def early_allocation_state
+    if early_allocation?
+      :eligible
+    elsif early_allocation_active?
+      :decision_pending
+    elsif within_early_allocation_window? &&
+      early_allocations.reject(&:created_within_referral_window?).select { |ea| %w[eligible discretionary].include?(ea.outcome) }.any?
+      :call_to_action # need to complete a new assessment
+    elsif early_allocation_notes?
+      :assessment_saved
+    end
+  end
+
+  def trigger_early_allocation_event
+    calc_status = if @offender.calculated_early_allocation_status.present?
+                    @offender.calculated_early_allocation_status.tap { |ea| ea.assign_attributes(eligible: early_allocation?) }
+                  else
+                    @offender.build_calculated_early_allocation_status(eligible: early_allocation?)
+                  end
+    if calc_status.changed?
+      calc_status.save!
+      EarlyAllocationEventService.send_early_allocation(calc_status)
+    end
+  end
+
 private
+
+  def early_allocation_notes?
+    if early_allocations.present?
+      !early_allocations.last.created_within_referral_window? || !early_allocations.last.community_decision_eligible_or_automatically_eligible?
+    end
+  end
+
+  def early_allocation_active?
+    early_allocations.present? && early_allocations.last.awaiting_community_decision?
+  end
 
   def handover
     @handover ||= if pom_responsible?

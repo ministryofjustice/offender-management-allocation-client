@@ -11,9 +11,9 @@ feature 'early allocation badges' do
                                                         sentenceStartDate: sentence_start))
   }
   let(:offender_no) { nomis_offender.fetch(:offenderNo) }
-  let(:notes_badge) { 'EARLY ALLOCATION NOTES' }
-  let(:active_badge) { 'EARLY ALLOCATION ACTIVE' }
-  let(:approved_badge) { 'EARLY ALLOCATION APPROVED' }
+  let(:notes_badge) { 'EARLY ALLOCATION ASSESSMENT SAVED' }
+  let(:active_badge) { 'EARLY ALLOCATION DECISION PENDING' }
+  let(:approved_badge) { 'EARLY ALLOCATION ELIGIBLE' }
 
   before do
     signin_spo_user([prison.code])

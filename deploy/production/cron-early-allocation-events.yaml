@@ -1,0 +1,53 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: early-allocation-events
+spec:
+  schedule: "00 02 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: early-allocation-events
+              image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/offender-management/offender-management-allocation-manager:latest
+              imagePullPolicy: Always
+              command: ['sh', '-c', "bundle exec rake trigger:early_allocation_events"]
+              envFrom:
+                - configMapRef:
+                    name: shared-environment
+                - secretRef:
+                    name: allocation-manager-secrets
+              env:
+                - name: PROMETHEUS_METRICS
+                  value: "off"
+                - name: POSTGRES_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: allocation-rds-instance-output
+                      key: rds_instance_address
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: allocation-rds-instance-output
+                      key: postgres_password
+                - name: POSTGRES_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: allocation-rds-instance-output
+                      key: postgres_name
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: allocation-rds-instance-output
+                      key: postgres_user
+                - name: REDIS_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticache-offender-management-allocation-manager-token-cache-production
+                      key: url
+          restartPolicy: OnFailure
+

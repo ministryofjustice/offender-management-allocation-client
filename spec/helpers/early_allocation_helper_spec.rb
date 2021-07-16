@@ -12,7 +12,7 @@ RSpec.describe EarlyAllocationHelper, type: :helper do
   let(:offender) { build(:mpc_offender, prison: prison, offender: case_info.offender, prison_record: api_offender) }
 
   describe '#early_allocation_status' do
-    subject { helper.early_allocation_status(case_info.offender.early_allocations, offender) }
+    subject { helper.early_allocation_status_text(offender) }
 
     context 'with no saved assessment' do
       let(:early_allocations) { [] }
@@ -141,7 +141,7 @@ RSpec.describe EarlyAllocationHelper, type: :helper do
       end
     end
 
-    subject { helper.early_allocation_action_link(case_info.offender.early_allocations, offender, prison) }
+    subject { helper.early_allocation_action_link(offender, prison) }
 
     let(:link) { Nokogiri::HTML(subject).css('a') }
     let(:text) { link.text }
